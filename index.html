@@ -2,25 +2,28 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="style.css?v=2">
+        <!-- Balise indispensable pour le rendu mobile -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css?v=3">
     </head>
     <body style="background: #1e6a36;">
         <section class="card on">
-            <h1 class="title">chargement...</h1>
+            <h1 class="title">Chargement...</h1>
         </section>
+
         <section class="hidden main">
             <section class="card">
-                <h3 class="title">Bienvenue Agent E</h3>
-                <p class="title">
+                <h2 class="title-main">Bienvenue Agent E</h2>
+                <p class="description">
                     Ceci est votre tableau de bord.<br>
                     Vous pouvez y retrouver votre nombre de vies restantes,<br>
                     mais aussi vos indices trouvés au cours de votre aventure pour retrouver Homer qui s'est fait kidnapper par <strong>Les Pinces Noires.</strong>
                 </p>
-                <p class="title" style="font-size: clamp(5px, 4vw, 18px);"><strong>Je vous rappelle que la Terre compte sur vous !</strong></p>
+                <p class="alert-text"><strong>Je vous rappelle que la Terre compte sur vous !</strong></p>
             </section>
         
             <section class="card">
-                <h3 class="title" style="font-size: clamp(18px, 4vw, 30px); text-decoration: underline;">Vies restantes :</h3>
+                <h3 class="section-title">Vies restantes :</h3>
                 <section class="heart-container">
                     <div class="heart-life" id="heart-01"></div>
                     <div class="heart-life" id="heart-02"></div>
@@ -31,7 +34,7 @@
             </section>
 
             <section class="card"> 
-                <h3 class="title" style="font-size: clamp(18px, 4vw, 30px); text-decoration: underline;">Indices trouvés :</h3>
+                <h3 class="section-title">Indices trouvés :</h3>
 
                 <section class="card hidden indice" style="background: #30aa57;" id="indice-01">
                     <h2 class="title">Indice 01</h2>
@@ -43,7 +46,7 @@
                     <p></p>
                 </section>
 
-                <section class="card hidden indice" style="background: #30aa57 ;" id="indice-03">
+                <section class="card hidden indice" style="background: #30aa57;" id="indice-03">
                     <h2 class="title">Indice 03</h2>
                     <p></p>
                 </section>
@@ -90,12 +93,11 @@
                     }
                 }
 
-                // 2. Gestion des Indices (affiche N indices selon data.Indice)
+                // 2. Gestion des Indices
                 if (data.Indice !== undefined) {
                     const allIndices = document.querySelectorAll(".indice");
 
                     allIndices.forEach((indiceElement, index) => {
-                        // Si l'index de l'élément est inférieur au nombre d'indices débloqués, on l'affiche
                         if (index < data.Indice) {
                             indiceElement.classList.remove("hidden");
                         } else {
@@ -122,13 +124,10 @@
                 }
             }, 2000);
 
-            // Vérifie toutes les 2 secondes
             setInterval(checkHeartState, 2000);
         }
 
-        // N'oublie pas d'appeler la fonction au chargement !
         On();
-
         </script>
     </body>
 </html>
