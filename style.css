@@ -114,13 +114,13 @@
             font-size: 1rem;
         }
         .mdp-input:focus {
-            border-color: var(--primary);
+            border-color: #30aa57;
             box-shadow: 0 0 0 3px rgba(46,125,50,0.12);
         }
 
 .btn { 
     display: inline-block; 
-    background: var(--primary); 
+    background: #1e6a36; 
     color: white !important; 
     padding: 12px 24px; 
     border-radius: 8px; 
