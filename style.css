@@ -3,7 +3,7 @@
     --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Animation d'apparition avec défilement vers le haut */
+/* Animation de défilement / apparition */
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -29,41 +29,12 @@
     display: none !important;
 }
 
-/* Typographie adaptée au mobile */
-.title-main {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: clamp(24px, 6vw, 36px);
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.section-title {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: clamp(22px, 5.5vw, 30px);
-    text-decoration: underline;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.description {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: clamp(16px, 4.5vw, 20px);
-    line-height: 1.6;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.alert-text {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: clamp(15px, 4vw, 18px);
-    text-align: center;
-    color: #e63946;
-}
-
 .title {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: clamp(16px, 4vw, 22px);
+    /* Agrandi pour mobile : minimum 18px sur petit écran */
+    font-size: clamp(18px, 5vw, 24px);
     text-align: center;
+    line-height: 1.5;
 }
 
 /* Conteneur des cœurs */
@@ -127,13 +98,14 @@
     background: #2b2b2b;
 }
 
-/* Adaptations spécifiques aux téléphones */
+/* Adaptation écran mobile */
 @media (max-width: 600px) {
     :root {
-        --heart-size: 40px;
+        --heart-size: 45px;
     }
     .card {
-        padding: 20px 15px;
+        padding: 15px 10px;
         margin: 15px auto;
+        width: 90%;
     }
 }
