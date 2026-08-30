@@ -118,8 +118,9 @@
 
         async function On() {
             const main = document.querySelector(".main");
+            const on = document.querySelector(".on");
 
-            on.classList.remove("hidden");
+            if (on) on.classList.remove("hidden");
 
             setTimeout(() => {
                 if (main && on) {
@@ -128,7 +129,7 @@
                 }
             }, 2000);
 
-            // Vérifie toutes les 2 secondes
+            checkHeartState();
             setInterval(checkHeartState, 2000);
         }
 
