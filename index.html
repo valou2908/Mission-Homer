@@ -6,7 +6,13 @@
         <link rel="stylesheet" href="style.css?v=2">
     </head>
     <body style="background: #1e6a36;">
-        <section class="card on">
+        <section class="card mdp">
+            <div id="zone-mdp" style="display:none; margin-top:15px; gap: 10px; flex-wrap: wrap;">
+            <input type="password" id="mdp" placeholder="Code d'accès…" class="mdp-input">
+            <button class="btn" onclick="verifier()">Valider</button>
+        </div>
+        </section>
+        <section class="card on hidden">
             <h1 class="title">chargement...</h1>
         </section>
         <section class="hidden main">
@@ -112,7 +118,6 @@
 
         async function On() {
             const main = document.querySelector(".main");
-            const on = document.querySelector(".on");
 
             on.classList.remove("hidden");
 
@@ -127,9 +132,19 @@
             setInterval(checkHeartState, 2000);
         }
 
-        // N'oublie pas d'appeler la fonction au chargement !
-        On();
+        const SECRET = "RWNvMjAyNS8yNg==";
 
+        function verifier() {
+            const input = document.getElementById("mdp").value;
+            const on = document.querySelector(".on");
+            const mdp = document.querySelector(".mdp");
+            
+            if (btoa(input) === SECRET) {
+                on.classList.remove("hidden");
+                mdp.classList.add("hidden");
+                On();
+            } 
+        }
         </script>
     </body>
 </html>
