@@ -99,15 +99,19 @@
     }
 }
 
-        .mdp-input {
-            padding: 12px 14px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            outline: none;
-            font-size: 1rem;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+.mdp-input {
+    width: 100%;                 
+    box-sizing: border-box;      
+    display: flex;                
+    align-items: center;
+    padding: 14px 16px;         
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 16px;              
+    gap: 10px;
+    flex-wrap: wrap;
+}
 
 
 .btn { 
