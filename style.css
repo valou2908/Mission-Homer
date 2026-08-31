@@ -99,24 +99,16 @@
     }
 }
 
-        .mdp-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
         .mdp-input {
-            flex: 1;
-            min-width: 180px;
-            padding: 10px 14px;
+            padding: 12px 14px;
             border-radius: 8px;
             border: 1px solid #ddd;
             outline: none;
             font-size: 1rem;
+            gap: 10px;
+            flex-wrap: wrap;
         }
-        .mdp-input:focus {
-            border-color: #30aa57;
-            box-shadow: 0 0 0 3px rgba(46,125,50,0.12);
-        }
+
 
 .btn { 
     display: inline-block; 
