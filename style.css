@@ -100,31 +100,35 @@
 }
 
 .mdp-input {
-    width: 100%;                 
-    box-sizing: border-box;      
-    display: flex;                
+    width: 100%;                  /* Full width on small screens */
+    box-sizing: border-box;       /* Keeps padding inside the set width */
+    display: flex;                /* Enables flex properties like gap and flex-wrap */
     align-items: center;
-    padding: 14px 16px;         
+    padding: 14px 16px;           /* Larger touch target for mobile fingers */
     border-radius: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid #30aa57;
+    background-color: #30aa57;
     outline: none;
-    font-size: 16px;              
+    font-size: 16px;              /* Prevents automatic zoom-in on iOS Safari */
     gap: 10px;
     flex-wrap: wrap;
 }
 
+/* Pour tous les champs de saisie */
+input::placeholder,
+textarea::placeholder {
+    color: #1e6a36;
+    opacity: 1; /* Nécessaire sur Firefox pour annuler l'opacité réduite par défaut */
+}
+
 
 .btn { 
-    display: inline-block; 
-    background: #1e6a36; 
+    background: #30aa57; 
     color: white !important; 
     padding: 12px 24px; 
     border-radius: 8px; 
-    text-decoration: none; 
     font-weight: bold; 
-    border: none; 
     cursor: pointer; 
     text-align: center;
     font-size: 1rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
