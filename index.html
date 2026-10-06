@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css?v=2">
+        <link rel="icon" type="image/png" href="Logo.png">
     </head>
     <body style="background: #1e6a36;">
         <section class="card mdp">
@@ -74,79 +75,155 @@
         </section>
 
         <script>
-        async function checkHeartState() {
-            try {
-                const res = await fetch("state.json?t=" + Date.now());
-                if (!res.ok) throw new Error("Fichier introuvable, statut " + res.status);
+// Variables globales (conservent leur valeur entre chaque appel de setInterval)
+let previousIndiceCount = null;
+const soundNewIndice = new Audio('Changement.mp3');
 
-                const data = await res.json();
-                console.log("Données reçues du JSON :", data);
+async function checkHeartState() {
+    try {
+        const res = await fetch("state.json?t=" + Date.now());
+        if (!res.ok) throw new Error("Fichier introuvable, statut " + res.status);
 
-                // 1. Gestion des Vies
-                const activeHearts = document.querySelectorAll(".heart-life");
-                if (data.Life !== undefined && activeHearts.length > data.Life) {
-                    const heartsToRemove = activeHearts.length - data.Life;
+        const data = await res.json();
+        console.log("Données reçues du JSON :", data);
 
-                    for (let i = 0; i < heartsToRemove; i++) {
-                        const currentActiveHearts = document.querySelectorAll(".heart-life");
-                        const lastHeart = currentActiveHearts[currentActiveHearts.length - 1];
-                        
-                        if (lastHeart) {
-                            lastHeart.classList.remove("heart-life");
-                            lastHeart.classList.add("heart-death");
-                        }
-                    }
+        // 1. Gestion des Vies
+        const activeHearts = document.querySelectorAll(".heart-life");
+        if (data.Life !== undefined && activeHearts.length > data.Life) {
+            const heartsToRemove = activeHearts.length - data.Life;
+
+            for (let i = 0; i < heartsToRemove; i++) {
+                const currentActiveHearts = document.querySelectorAll(".heart-life");
+                const lastHeart = currentActiveHearts[currentActiveHearts.length - 1];
+                
+                if (lastHeart) {
+                    lastHeart.classList.remove("heart-life");
+                    lastHeart.classList.add("heart-death");
                 }
-
-                // 2. Gestion des Indices (affiche N indices selon data.Indice)
-                if (data.Indice !== undefined) {
-                    const allIndices = document.querySelectorAll(".indice");
-
-                    allIndices.forEach((indiceElement, index) => {
-                        // Si l'index de l'élément est inférieur au nombre d'indices débloqués, on l'affiche
-                        if (index < data.Indice) {
-                            indiceElement.classList.remove("hidden");
-                        } else {
-                            indiceElement.classList.add("hidden");
-                        }
-                    });
-                }
-
-            } catch (error) {
-                console.error("Erreur :", error);
             }
         }
 
-        async function On() {
-            const main = document.querySelector(".main");
-            const on = document.querySelector(".on");
+        // 2. Gestion des Indices
+        if (data.Indice !== undefined) {
 
-            if (on) on.classList.remove("hidden");
+            const allIndices = document.querySelectorAll(".indice");
 
-            setTimeout(() => {
-                if (main && on) {
-                    on.classList.add("hidden");
-                    main.classList.remove("hidden");
+            allIndices.forEach((indiceElement, index) => {
+                if (index < data.Indice) {
+                    indiceElement.classList.remove("hidden");
+                } else {
+                    indiceElement.classList.add("hidden");
                 }
-            }, 2000);
-
-            checkHeartState();
-            setInterval(checkHeartState, 2000);
+            });
         }
 
-        const SECRET = "SG9tZXI=";
+    } catch (error) {
+        console.error("Erreur :", error);
+    }
+}
 
-        function verifier() {
-            const input = document.getElementById("mdp").value;
-            const on = document.querySelector(".on");
-            const mdp = document.querySelector(".mdp");
-            
-            if (btoa(input) === SECRET) {
-                on.classList.remove("hidden");
-                mdp.classList.add("hidden");
-                On();
-            } 
+async function On() {
+    const main = document.querySelector(".main");
+    const on = document.querySelector(".on");
+
+    if (on) on.classList.remove("hidden");
+
+    setTimeout(() => {
+        if (main && on) {
+            on.classList.add("hidden");
+            main.classList.remove("hidden");
+            detectchangementIndice();
         }
-        </script>
+    }, 2000);
+
+    checkHeartState();
+    setInterval(checkHeartState, 2000);
+}
+
+const SECRET = "SG9tZXI=";
+
+function verifier() {
+    var Login = recupererCookie('Login');
+    const input = document.getElementById("mdp").value;
+    const on = document.querySelector(".on");
+    const mdp = document.querySelector(".mdp");
+
+    if(Login=='True'){
+        on.classList.remove("hidden");
+        mdp.classList.add("hidden");
+        On();
+        Troll();
+    } else {    
+        if (btoa(input) === SECRET) {
+            on.classList.remove("hidden");
+            mdp.classList.add("hidden");
+            creerCookie ('Login', 'True', 1);
+            On();
+        } 
+    }
+}
+
+function creerCookie(nom, contenu, jours) {
+    var e = null;
+    var date = new Date ();
+    date. setTime (date.getTime() + (jours * 24 * 60 * 60 * 1000));
+    e = "; expires=" + date. toGMTString();
+    document. cookie = nom + "=" + contenu + e + "; path=/";
+}
+
+function recupererCookie (nom) {
+    nom = nom + "=";
+    var liste = document. cookie. split (';');
+    for (var i = 0; i < liste.length; i++) {
+        var c = liste[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nom) == 0) return c.substring(nom.length, c.length);
+    }
+    return null;
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+            if (recupererCookie('Login') === 'True') {
+                verifier();
+            }
+        });
+
+async function detectchangementIndice(){
+    const music = new Audio('Changement.mp3');
+
+    const res = await fetch("state.json?t=" + Date.now());
+    if (!res.ok) throw new Error("Fichier introuvable, statut " + res.status);
+
+    const data = await res.json();
+    var LostIndice = recupererCookie('Indice_dernierco');
+    let audioUnlocked = false;
+
+    if(LostIndice!=data.Indice){
+        if (!audioUnlocked) {
+            music.play();
+            soundNewIndice.currentTime = 0;
+            audioUnlocked = true;
+            document.removeEventListener('click', detectchangementIndice);
+            document.removeEventListener('keydown', detectchangementIndice);
+            creerCookie ('Indice_dernierco', data.Indice, 1);
+        }
+    } 
+}
+function Troll(){
+    let Random_meme=Math.floor(Math.random()*10000)
+
+    if(Random_meme==10000){
+        document.location.href="Nyan.mp4"; 
+    }
+    if(Random_meme==5000){
+        document.location.href="Rick.mp4"; 
+    }
+    if(Random_meme==1){
+        document.location.href="Keyboard.mp4";
+    }
+}
+document.addEventListener('click', detectchangementIndice);
+document.addEventListener('keydown', detectchangementIndice);
+</script>
     </body>
 </html>
