@@ -168,3 +168,20 @@ textarea::placeholder {
     text-align: center;
     font-size: 1rem;
 }
+
+.media {
+    display: block;
+    padding: 10px;
+    width: min(100%, 300px);
+    height: auto;
+    border-radius: 50px;
+    object-fit: cover;
+    opacity: 0;
+
+    animation: Opacitypulse 1s forwards;
+}
+
+@keyframes Opacitypulse {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
