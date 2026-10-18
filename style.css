@@ -13,9 +13,30 @@
         transform: translateY(0);    /* Position normale */
     }
 }
+@keyframes slideInX {
+    from {
+        opacity: 0;
+        transform: translateY(30px); /* Départ 30px plus bas */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);    /* Position normale */
+    }
+}
 
+.indice {
+    background: #292828;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    margin: 30px auto; 
+    max-width: 1000px;
+    
+    /* Application de l'animation */
+    animation: slideIn 0.6s ease-out forwards;
+}
 .card {
-    background: #3dd36c;
+    background: #121212;
     padding: 30px;
     border-radius: 15px;
     box-shadow: var(--shadow);
@@ -30,8 +51,21 @@
 
 .title {
     font-family: Arial, Helvetica, sans-serif;
+    color: green;
     
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+    
+    animation: typing 4s steps(60, end) forwards;
 }
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
 .heart-container {
     display: flex;
     gap: calc(var(--heart-size) * 0.4);
@@ -89,7 +123,7 @@
 .heart-death,
 .heart-death::before,
 .heart-death::after {
-    background: #2b2b2b;
+    background: #292828;
 }
 
 /* Responsive */
@@ -106,8 +140,8 @@
     align-items: center;
     padding: 14px 16px;           /* Larger touch target for mobile fingers */
     border-radius: 8px;
-    border: 1px solid #30aa57;
-    background-color: #30aa57;
+    border: 1px solid #121212;
+    background-color: #000000;
     outline: none;
     font-size: 16px;              /* Prevents automatic zoom-in on iOS Safari */
     gap: 10px;
@@ -117,13 +151,15 @@
 /* Pour tous les champs de saisie */
 input::placeholder,
 textarea::placeholder {
-    color: #1e6a36;
+    color: green;
     opacity: 1; /* Nécessaire sur Firefox pour annuler l'opacité réduite par défaut */
 }
 
 
 .btn { 
-    background: #30aa57; 
+    display: block;
+    margin-left: auto;
+    background: green; 
     color: white !important; 
     padding: 12px 24px; 
     border-radius: 8px; 

@@ -6,9 +6,9 @@
         <link rel="stylesheet" href="style.css?v=2">
         <link rel="icon" type="image/png" href="Logo.png">
     </head>
-    <body style="background: #1e6a36;">
+    <body style="background: #000000;">
         <section class="card mdp">
-            <h3 class="title"; style="margin-top:15px; text-decoration: underline; color: #195a2d;">Mots de Passe :</h2>
+            <h3 class="title";>Mots de Passe :</h2>
             <div id="zone-mdp" style="margin-top:15px; gap: 8px; flex-wrap: wrap;">
             <input type="password" id="mdp" placeholder="Code d'accès…" class="mdp-input">
             <button class="btn" style="margin-top:15px;" onclick="verifier()">Valider</button>
@@ -19,13 +19,13 @@
         </section>
         <section class="hidden main">
             <section class="card">
-                <h3 class="title">Bienvenue Agent E</h3>
-                <p class="title" style="font-size: clamp(5px, 4vw, 15px);">
-                    Ceci est votre tableau de bord.<br>
-                    Vous pouvez y retrouver votre nombre de vies restantes,<br>
-                    mais aussi vos indices trouvés au cours de votre aventure pour retrouver Homer qui s'est fait kidnapper par <strong>Les Pinces Noires.</strong>
+                <h3 class="title">Bienvenue Agent E</h3></br>
+                <p class="title" style="font-size: clamp(10px, 4vw, 15px);">
+                <span class="line line-1">Ceci est votre tableau de bord.</span><br>
+                <span class="line line-2">Vous pouvez y retrouver votre nombre de vies restantes,</span><br>
+                <span class="line line-3">mais aussi vos indices trouvés au cours de votre aventure pour retrouver Homer qui s'est fait kidnapper par <strong>Les Pinces Noires.</strong></span>
                 </p>
-                <p class="title" style="font-size: clamp(5px, 4vw, 18px);"><strong>la Terre compte sur vous !</strong></p>
+            </br> <p class="title" style="font-size: clamp(5px, 4vw, 18px);"><strong>la Terre compte sur vous !</strong></p>
             </section>
         
             <section class="card">
@@ -42,43 +42,87 @@
             <section class="card"> 
                 <h3 class="title" style="font-size: clamp(18px, 4vw, 30px); text-decoration: underline;">Indices trouvés :</h3>
 
-                <section class="card hidden indice" style="background: #30aa57;" id="indice-01">
+                <section class="hidden indice" onclick="OnclickIndice(this)" id="indice-01">
                     <h2 class="title">Indice 01</h2>
-                    <p></p>
+                    <br><p class="title hidden">abc</p>
                 </section>
 
-                <section class="card hidden indice" style="background: #30aa57;" id="indice-02">
+                <section class="hidden indice" onclick="OnclickIndice(this)" id="indice-02">
                     <h2 class="title">Indice 02</h2>
-                    <p></p>
+                    <br><p class="title hidden"></p>
                 </section>
 
-                <section class="card hidden indice" style="background: #30aa57 ;" id="indice-03">
+                <section class="hidden indice" onclick="OnclickIndice(this)"id="indice-03">
                     <h2 class="title">Indice 03</h2>
-                    <p></p>
+                    <br><p class="title hidden"></p>
                 </section>
 
-                <section class="card hidden indice" style="background: #30aa57;" id="indice-04">
+                <section class="hidden indice" onclick="OnclickIndice(this)" id="indice-04">
                     <h2 class="title">Indice 04</h2>
-                    <p></p>
+                    <br><p class="title hidden"></p>
                 </section>
 
-                <section class="card hidden indice" style="background: #30aa57;" id="indice-05">
+                <section class="hidden indice" onclick="OnclickIndice(this)" id="indice-05">
                     <h2 class="title">Indice 05</h2>
-                    <p></p>
+                    <br><p class="title hidden"></p>
                 </section>
 
-                <section class="card hidden indice" style="background: #30aa57;" id="indice-06">
+                <section class="hidden indice" onclick="OnclickIndice(this)" id="indice-06">
                     <h2 class="title">Indice 06</h2>
-                    <p></p>
+                    <br><p class="title hidden"></p>
                 </section>
             </section>
         </section>
-
+        //Section pour le mode développeur, à retirer plus tard
+        <section class="card hidden" id="dev-mode" style="margin-top: 20px;">
+            <h8 class="title" style="font-size: clamp(18px, 4vw, 30px);">Dev Mode</h8>
+                <section id="Reset" style="margin-top: 10px;">
+                    <br><p class="title" style="font-size: clamp(10px, 4vw, 15px);"><strong></strong>Réinitialise les cookies de connexion et d'indices.</strong></p>
+                    <br><button class="btn" onclick="resetAll()">Réinitialiser</button>
+                </section>
+        </section>
+        //Fin de la section à retirer plus tard
         <script>
 // Variables globales (conservent leur valeur entre chaque appel de setInterval)
 let previousIndiceCount = null;
 const soundNewIndice = new Audio('Changement.mp3');
 
+function OnclickIndice(indice) {
+    const paragraphe = indice.querySelector("p");
+    if (paragraphe) {
+        paragraphe.classList.toggle("hidden");
+    }
+}
+
+// Fonction pour activer le mode développeur à retirer plus tard
+function devmode() {
+    const devModeSection = document.getElementById("dev-mode");
+    if (devModeSection) {
+        devModeSection.classList.remove("hidden");
+    }
+}
+
+const konamiCode = [
+    "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
+    "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
+    "b", "a"
+];
+let konamiProgress = 0;
+
+document.addEventListener("keydown", (event) => {
+    const key = event.key.length === 1 ? event.key.toLowerCase() : event.key;
+
+    if (key === konamiCode[konamiProgress]) {
+        konamiProgress++;
+        if (konamiProgress === konamiCode.length) {
+            konamiProgress = 0;
+            devmode();
+        }
+    } else {
+        konamiProgress = key === konamiCode[0] ? 1 : 0;
+    }
+});
+//Fin de la fonction à retirer plus tard
 async function checkHeartState() {
     try {
         const res = await fetch("state.json?t=" + Date.now());
@@ -162,6 +206,13 @@ function verifier() {
         } 
     }
 }
+
+function resetAll() {
+    creerCookie ('Login', 'False', 1);
+    creerCookie ('Indice_dernierco', '0', 1);
+    document.location.reload();
+}
+
 
 function creerCookie(nom, contenu, jours) {
     var e = null;
